@@ -1,4 +1,4 @@
-name: Consideration Test CI
+name: Seaport Test CI
 
 on: [push, pull_request]
 
@@ -21,6 +21,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - run: yarn install
       - run: yarn build
 
@@ -38,6 +39,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - run: yarn install
       - run: yarn lint:check
 
@@ -55,6 +57,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - run: yarn install
       - run: yarn build
       - run: yarn test
@@ -76,6 +79,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - run: yarn install
       - run: yarn build
       - run: yarn build:ref
@@ -142,13 +146,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - run: yarn install
       - run: yarn build
       - run: yarn coverage
-      - uses: VeryGoodOpenSource/very_good_coverage@v1
+      - uses: codecov/codecov-action@v3
         with:
-          path: "./coverage/lcov.info"
-          min_coverage: 100
+          files: ./coverage/lcov.info
+          flags: production
 
   reference-coverage:
     name: Run Reference Coverage Tests
@@ -167,11 +172,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - run: yarn install
       - run: yarn build
       - run: yarn build:ref
       - run: yarn coverage:ref
-      - uses: VeryGoodOpenSource/very_good_coverage@v1
+      - uses: codecov/codecov-action@v3
         with:
-          path: "./coverage/lcov.info"
-          min_coverage: 100
+          files: ./coverage/lcov.info
+          flags: reference

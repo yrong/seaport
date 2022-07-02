@@ -1,6 +1,7 @@
 node_modules
+.eslintrc*
 artifacts
 cache
-coverage*
-gasReporterOutput.json
+constants
+coverage
 lib/murky
