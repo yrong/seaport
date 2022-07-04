@@ -2,7 +2,6 @@ import { ethers, BigNumber, constants, utils } from "ethers";
 
 import {
 	BasicOrderParameters,
-	BigNumberish,
 	ConsiderationItem,
 	CriteriaResolver,
 	FulfillmentComponent,
@@ -11,27 +10,18 @@ import {
 	OrderComponents,
 } from "../test/utils/types";
 
+import type { BigNumberish, ContractTransaction } from "ethers";
+
 import {
 	getItemETH,
 	convertSignatureToEIP2098,
 	getOfferOrConsiderationItem,
+	toHex,
+	toBN,
 } from "../test/utils/encoding";
 import { marketplaceFixture } from "../test/utils/fixtures/marketplace";
 
 const hexRegex = /[A-Fa-fx]/g;
-
-export const toHex = (n: BigNumberish, numBytes: number = 0) => {
-	const asHexString = BigNumber.isBigNumber(n)
-		? n.toHexString().slice(2)
-		: typeof n === "string"
-		? hexRegex.test(n)
-			? n.replace(/0x/, "")
-			: (+n).toString(16)
-		: (+n).toString(16);
-	return `0x${asHexString.padStart(numBytes * 2, "0")}`;
-};
-
-export const toBN = (n: BigNumberish) => BigNumber.from(toHex(n));
 
 const main = async () => {
 	// THIS KEY IS A DEFAULT KEY FROM GANACHE
